@@ -1,9 +1,15 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { commonDate } from "./auth.common.date";
-import { User } from "./user";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { commonDate } from './auth.common.date';
+import { User } from './user';
 
 @Entity()
-export class Comment extends commonDate{
+export class Comment extends commonDate {
   @PrimaryGeneratedColumn({
     type: 'int',
     name: 'id',
@@ -22,6 +28,6 @@ export class Comment extends commonDate{
   writer: string;
 
   @ManyToOne(() => User, (user) => user.comments)
-  @JoinColumn([{ referencedColumnName: 'id'}])
+  @JoinColumn([{ referencedColumnName: 'id' }])
   user: User;
 }
