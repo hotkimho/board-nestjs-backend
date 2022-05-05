@@ -5,7 +5,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags('유저 인증 API')
 export class AuthController {
   @Post('signup')
-  @ApiTags('signup')
+  @ApiTags('sign up')
   @ApiOperation({
     summary: '회원가입 API',
     description: '회원가입된 유저를 생성한다',
