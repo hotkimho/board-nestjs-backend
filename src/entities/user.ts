@@ -39,7 +39,7 @@ export class User extends commonDate {
   @Column({
     type: 'varchar',
     select: false,
-    length: 50,
+    length: 1000,
   })
   password: string;
 
