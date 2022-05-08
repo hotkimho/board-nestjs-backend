@@ -1,20 +1,26 @@
-import {Column, Entity } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export abstract class commonDate {
-  @Column({
+  @CreateDateColumn({
     type: 'timestamp',
     nullable: true,
   })
   created_date: Date;
 
-  @Column({
+  @UpdateDateColumn({
     type: 'timestamp',
     nullable: true,
   })
   modified_date: Date;
 
-  @Column({
+  @DeleteDateColumn({
     type: 'timestamp',
     nullable: true,
   })

@@ -3,6 +3,7 @@ import { commonDate } from './auth.common.date';
 import { Post } from './post';
 import { Comment } from './comment';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 @Entity()
 export class User extends commonDate {
@@ -16,6 +17,7 @@ export class User extends commonDate {
   })
   id: number;
 
+  @IsString()
   @ApiProperty({
     example: 'rlagh123',
     description: '사용자 username',
@@ -28,6 +30,8 @@ export class User extends commonDate {
   })
   username: string;
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty({
     example: '!rlagh123',
     description: '사용자 password',
@@ -39,6 +43,8 @@ export class User extends commonDate {
   })
   password: string;
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty({
     example: 'kimho',
     description: '사용자 nickname',
@@ -51,6 +57,8 @@ export class User extends commonDate {
   })
   nickname: string;
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty({
     example: 'rlaghekd777@naver.com',
     description: '사용자 email',
