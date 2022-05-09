@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../entities/user';
-import { SignupRequestDto } from '../auth/dto/signup.request.dto';
+import { SignupRequestDto } from './dto/signup.request.dto';
 import { BadRequestException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
