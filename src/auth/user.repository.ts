@@ -10,18 +10,24 @@ export class UserRepository extends Repository<User> {
     const { username, password, email, nickname } = signupRequestDto;
 
     const user = await this.findOne({
-      where: { username, email, nickname },
+      where: [{ username }, { email }, { nickname }],
     });
+    console.log(user);
     if (user) {
       throw new BadRequestException('사용자가 이미 존재합니다');
     }
+
     const hashedPassword = await bcrypt.hash(password, 12);
-    await this.save({
-      username,
-      password: hashedPassword,
-      email,
-      nickname,
-    });
+    try {
+      await this.save({
+        username,
+        password: hashedPassword,
+        email,
+        nickname,
+      });
+    } catch (error) {
+      throw new BadRequestException('회원가입이 실패했습니다.');
+    }
   }
 
   async findByUsername(username: string): Promise<User> {
