@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../entities/user';
-import { Post } from '../entities/post';
-import { Comment } from '../entities/comment';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
 import { LocalSerializer } from './local.serializer';
+import { UserModule } from '../user/user.module';
+import { User } from '../entities/user';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Post, Comment]),
+    TypeOrmModule.forFeature([User]),
     PassportModule.register({ session: true }),
+    UserModule,
   ],
   providers: [AuthService, LocalStrategy, LocalSerializer],
   controllers: [],

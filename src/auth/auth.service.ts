@@ -1,25 +1,22 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { UserRepository } from '../user/user.repository';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
-  ) {}
+  constructor(private userService: UserService) {}
 
   async validateUser(username: string, password: string) {
     console.log('start validateUser', username, password);
-    const user = await this.userRepository.findOne({
-      where: { username },
-      select: ['id', 'username', 'password'],
-    });
+    const user = await this.userService.findByUsername(username);
+    console.log(user);
     if (!user) {
       return null;
     }
-
     const result = await bcrypt.compare(password, user.password);
 
     if (result) {

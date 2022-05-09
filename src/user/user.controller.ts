@@ -24,14 +24,8 @@ export class UserController {
     description: '회원가입이 실패했습니다.',
   })
   @Post('signup')
-  async signUp(@Body() data: SignupRequestDto, @Response() res) {
-    await this.userService.signup(
-      data.username,
-      data.password,
-      data.email,
-      data.nickname,
-    );
-    return res.send('OK');
+  async signUp(@Body() data: SignupRequestDto) {
+    return await this.userService.signup(data);
   }
 
   @ApiTags('signin')

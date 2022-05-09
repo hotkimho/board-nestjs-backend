@@ -1,38 +1,21 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../entities/user';
-import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import { UserRepository } from './user.repository';
+import { SignupRequestDto } from '../auth/dto/signup.request.dto';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(UserRepository)
+    private userRepository: UserRepository,
   ) {}
 
-  async signup(
-    username: string,
-    password: string,
-    email: string,
-    nickname: string,
-  ) {
-    const user = await this.userRepository.findOne({ where: { username } });
-    if (user) {
-      throw new HttpException('사용자가 이미 존재합니다.', 400);
-    }
-    const hashedPassword = await bcrypt.hash(password, 12);
-    await this.userRepository.save({
-      username,
-      password: hashedPassword,
-      email,
-      nickname,
-    });
+  async signup(signupRequestDto: SignupRequestDto): Promise<void> {
+    return await this.userRepository.createUser(signupRequestDto);
   }
 
   async findByUsername(username: string) {
-    return await this.userRepository.findOne({
-      where: { username },
-      select: ['id', 'username', 'password'],
-    });
+    console.log('start findUsername ');
+    return await this.userRepository.findByUsername(username);
   }
 }
